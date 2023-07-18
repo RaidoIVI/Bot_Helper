@@ -1,26 +1,21 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-using Telegram.Bot.Types;
-using Telegram.Bot.Exceptions;
+﻿using Telegram.Bot;
 using Telegram.Bot.Polling;
-using Telegram.Bot;
+using Telegram.Bot.Types;
 
 namespace TelegramBotExperiments
 {
 
     class Program
     {
-        static ITelegramBotClient bot = new TelegramBotClient("");
+
+        static ITelegramBotClient bot = new TelegramBotClient("6312453581:AAFTzte_oLs4imWqq5mlTSNfYkHtta1WJcY");
+
         public static async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
-            // Некоторые действия
-            Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(update));
             if (update.Type == Telegram.Bot.Types.Enums.UpdateType.Message)
             {
                 var message = update.Message;
-                if (message.Text.ToLower() == "/start")
+                if (message.Text != null && message.Text.ToLower() == "/start")
                 {
                     await botClient.SendTextMessageAsync(message.Chat, "Добро пожаловать на борт, добрый путник!");
                     return;
@@ -36,7 +31,7 @@ namespace TelegramBotExperiments
         }
 
 
-        static void Main(string[] args)
+        static void Main()
         {
             Console.WriteLine("Запущен бот " + bot.GetMeAsync().Result.FirstName);
 
